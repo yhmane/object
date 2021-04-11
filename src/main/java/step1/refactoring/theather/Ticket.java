@@ -1,4 +1,4 @@
-package step1.theather;
+package step1.refactoring.theather;
 
 public class Ticket {
     private Long fee;

@@ -1,4 +1,4 @@
-package step1.theather;
+package step1.refactoring.theather;
 
 public class TicketSeller {
     private TicketOffice ticketOffice;
@@ -9,5 +9,10 @@ public class TicketSeller {
 
     public TicketOffice getTicketOffice() {
         return ticketOffice;
+    }
+
+    public void sellTo(Audience audience) {
+        Long ticketFee = audience.buy(ticketOffice.getTicket());
+        ticketOffice.plusAmount(ticketFee);
     }
 }

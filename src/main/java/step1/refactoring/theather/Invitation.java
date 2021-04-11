@@ -1,4 +1,4 @@
-package step1.theather;
+package step1.refactoring.theather;
 
 import java.time.LocalDateTime;
 

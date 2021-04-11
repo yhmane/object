@@ -1,4 +1,4 @@
-package step1.theather;
+package step1.origin.theather;
 
 import java.util.ArrayList;
 import java.util.Arrays;

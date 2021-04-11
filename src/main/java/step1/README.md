@@ -1,4 +1,4 @@
-# 티켓판매 어플리케이션 (origin > theater)
+## 티켓판매 어플리케이션 (origin > theater)
 ### 요구사항
 * 추첨을 통해 선정된 관람객에게 공연을 무료로 관람할 수 있는 초대장을 발송
 
@@ -71,3 +71,63 @@ public Long buy(Ticket ticket) {
   * Theater에게 많은 책임이 부여 되었다. TicketSeller, TicketOffice, Audience, Bag (책임 분배 필요)
   * Theater가 몰라도 되는 세부사항 Audience와 TickerSeller 내부로 감추자 (캡슐화)  
   * 이러한 책임을 각 객체에 적절하게 분산시킴으로 절차적인 프로그래밍을 객체지향적으로 바꿀 수 있었다 (자율성을 높이고 응집도를 낮춤)
+  
+  
+## 조금더 개선해보자 (think > theather)
+수정전 (TicketSeller, Audience)
+```java
+public void sellTo(Audience audience) {
+    Long ticketFee = audience.buy(ticketOffice.getTicket());
+    ticketOffice.plusAmount(ticketFee); 
+}
+
+public Long buy(Ticket ticket) {
+    if (bag.hasInvitation()) {
+        bag.setTicket(ticket);
+        return 0L;
+    } else {
+        bag.setTicket(ticket);
+        bag.minusAmount(ticket.getFee());
+        return ticket.getFee();
+    }
+}
+```
+수정후 (TicketSeller, Audience, TickerOffice, Bag)
+```java
+public void sellTo(Audience audience) {
+    ticketOffice.sellTicketTo(audience);
+}
+
+public Long buy(Ticket ticket) {
+    return bag.hold(ticket);
+}
+
+public void sellTicketTo(Audience audience) {
+    Long ticketFee = audience.buy(getTicket());
+    plusAmount(ticketFee);
+}
+
+public Long hold(Ticket ticket) {
+    if (hasInvitation()) {
+        setTicket(ticket);
+        return 0L;
+    } else {
+        setTicket(ticket);
+        minusAmount(ticket.getFee());
+        return ticket.getFee();
+    }
+}
+```
+* TicketOffice와 Bag의 자율성을 확보했다
+  * 하지만, TicketOffice와 Audience에 의존성이 추가 되었다
+  * 기존 Audience는 TicketSeller에만 의존했는데, TicketSeller와 TicketOffice 모두에 의존하기 때문에 결합도가 높아져 버렸다
+  * trade-off의 순간이 온 것이다
+  
+설계는 모든 사람을 만족시킬 수 없다. 훌륭한 설계는 적절한 트레이드오프의 결과물이라는 사실을 명심하자
+
+---
+* 캡슐화
+* 책임의 분배
+* 자율성
+
+  

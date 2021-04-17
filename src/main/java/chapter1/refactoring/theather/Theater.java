@@ -1,4 +1,4 @@
-package step1.think.theather;
+package chapter1.refactoring.theather;
 
 public class Theater {
 

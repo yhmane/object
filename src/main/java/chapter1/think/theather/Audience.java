@@ -1,4 +1,4 @@
-package step1.origin.theather;
+package chapter1.think.theather;
 
 public class Audience {
     private Bag bag;
@@ -9,5 +9,9 @@ public class Audience {
 
     public Bag getBag() {
         return bag;
+    }
+
+    public Long buy(Ticket ticket) {
+        return bag.hold(ticket);
     }
 }

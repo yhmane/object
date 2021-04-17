@@ -1,4 +1,4 @@
-package step1.origin.theather;
+package chapter1.think.theather;
 
 public class TicketSeller {
     private TicketOffice ticketOffice;
@@ -9,5 +9,9 @@ public class TicketSeller {
 
     public TicketOffice getTicketOffice() {
         return ticketOffice;
+    }
+
+    public void sellTo(Audience audience) {
+        ticketOffice.sellTicketTo(audience);
     }
 }

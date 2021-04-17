@@ -1,4 +1,4 @@
-package step1.origin.theather;
+package chapter1.think.theather;
 
 public class Ticket {
     private Long fee;

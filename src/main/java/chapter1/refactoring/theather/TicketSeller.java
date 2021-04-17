@@ -1,4 +1,4 @@
-package step1.refactoring.theather;
+package chapter1.refactoring.theather;
 
 public class TicketSeller {
     private TicketOffice ticketOffice;

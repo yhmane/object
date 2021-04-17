@@ -1,4 +1,4 @@
-package step1.think.theather;
+package chapter1.origin.theather;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,18 +9,17 @@ public class TicketOffice {
     private Long amount;
     private List<Ticket> tickets = new ArrayList<>();
 
-    public TicketOffice(Long amount, Ticket... tickets) {
+    public TicketOffice(Long amount, Ticket ... tickets) {
         this.amount = amount;
         this.tickets.addAll(Arrays.asList(tickets));
     }
 
-    public void sellTicketTo(Audience audience) {
-        Long ticketFee = audience.buy(getTicket());
-        plusAmount(ticketFee);
+    public Ticket getTicket() {
+        return tickets.remove(0);
     }
 
-    private Ticket getTicket() {
-        return tickets.remove(0);
+    public void minusAmount(Long amount) {
+        this.amount -= amount;
     }
 
     public void plusAmount(Long amount) {

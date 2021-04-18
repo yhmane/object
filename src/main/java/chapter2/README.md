@@ -46,3 +46,47 @@
     * 하나의 인스턴스 변수만 포함하더라도 개념을 명시적으로 표현하려면 클래스로 도메인을 구현해라
     * 조금더 직관적으로 의미를 전달할 수 있다
     * 금액과 관련된 로직이 서로 다른 곳에 중복되어 구현하는 것을 막을 수 있다
+
+### 상속과 다형성
+> 컴파일 시간 의존성과 실행 시간 의존성 -> Movie와 DiscountPolicy는 의존 관계
+```java
+// 금액 할인정책에 의존
+Movie avatar = new Movie("아바타", Duration.ofMinutes(120), Money.wons(10000), new AmountDiscountPolicy(Money.wons(800), ...));
+// 비율 할인정책에 의존
+Movie avatar = new Movie("아바타", Duration.ofMinutes(120), Money.wons(10000), new PercentDiscountPolicy(0,1, ...));
+
+public class Movie {
+    public Money calculateMovieFee(Screening screening) {
+        return fee.minus(discountPolicy.calculateDiscountAmount(screening));
+    }
+}
+```
+* 코드의 의존성과 실행 시점의 의존성이 서로 다를 수 있다.
+    * 코드의 의존성과 실행 시점의 의존성이 다르면 코드를 이해하기 어려워 질 수 있다
+    * 반면, 코드는 유연해지고 확장 가능성이 생기는 트레이드오프의 산물
+    * Movie.calculateMovieFee()는 코드레벨에서 어떠한 DiscountPolicy에 의해 calculateDiscountAmount() 실행될지 몰라도 된다
+    
+#### 상속
+> 상속은 객체지향에서 코드를 재사용하기 위해 가장 널리 사용되는 방법
+* 기존 클래스가 가지고 있는 모든 속성과 행동을 새로운 클래스에 전이
+* 부모 클래스의 구현을 공유하면서도 행동이 다른 자식 클래스에 대하여 구현이 용이  
+* DiscountPolicy
+    * AmountDiscountPolicy
+    * PercentDiscountPolicy
+* 단점
+    * 상속을 하게 되면 캡슐화가 위반될 수 있다
+    * 객체 설계가 유연하지 않게 된다
+
+단점을 극복하기 위해 다음과 같이 인스턴스 변수를 이용해 실행 시점에 할인 정책을 변경할 수 있도록 코드를 추가해주자
+```java
+public class Moive {
+    private DiscountPolicy discountPolicy;
+    
+    public void chanseDiscountPolicy(DiscountPolicy discountPolicy) {
+        this.discountPolicy = discountPolicy;
+    }
+}
+
+Movie avatar = new Movie("아바타", Duration.ofMinutes(120), Money.wons(10000), new AmountDiscountPolicy(Money.wons(800), ...));
+avatar.chanseDiscountPolicy(new PercentDiscountPolicy(0,1, ...));
+```

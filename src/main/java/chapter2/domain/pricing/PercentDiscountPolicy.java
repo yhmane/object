@@ -1,11 +1,11 @@
 package chapter2.domain.pricing;
 
 import chapter2.domain.DiscountCondition;
-import chapter2.domain.DiscountPolicy;
+import chapter2.domain.DefaultDiscountPolicy;
 import chapter2.domain.Money;
 import chapter2.domain.Screening;
 
-public class PercentDiscountPolicy extends DiscountPolicy {
+public class PercentDiscountPolicy extends DefaultDiscountPolicy {
     private double percent;
 
     public PercentDiscountPolicy(double percent, DiscountCondition... conditions) {
